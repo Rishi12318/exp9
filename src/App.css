@@ -4,3 +4,49 @@
     radial-gradient(circle at 85% 80%, rgba(25, 135, 84, 0.18), transparent 38%),
     linear-gradient(140deg, #eef3fb 0%, #f9fbff 100%);
 }
+
+.dashboard-card {
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(8, 33, 68, 0.08);
+  border: 1px solid rgba(16, 56, 96, 0.08);
+}
+
+.dashboard-panel {
+  padding: 12px;
+  border: 1px solid rgba(16, 56, 96, 0.14);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.stat-card {
+  background: linear-gradient(150deg, #ffffff 0%, #f4f8ff 100%);
+}
+
+.stat-card.success {
+  background: linear-gradient(150deg, #ffffff 0%, #effaf2 100%);
+}
+
+.stat-card.warning {
+  background: linear-gradient(150deg, #ffffff 0%, #fff8eb 100%);
+}
+
+.stat-card.danger {
+  background: linear-gradient(150deg, #ffffff 0%, #fff1f1 100%);
+}
+
+.stat-label {
+  color: #5f6f84;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.payload-pre {
+  background: #0e1726;
+  color: #d7e1f2;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  max-height: 180px;
+  overflow: auto;
+  margin: 0;
+}
