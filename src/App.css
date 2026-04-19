@@ -1,0 +1,6 @@
+.rbac-bg {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(11, 94, 215, 0.16), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(25, 135, 84, 0.18), transparent 38%),
+    linear-gradient(140deg, #eef3fb 0%, #f9fbff 100%);
+}
