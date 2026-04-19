@@ -18,8 +18,10 @@ function Login() {
 
   const login = async () => {
     setError('');
+    const normalizedUsername = username.trim();
+    const normalizedPassword = password.trim();
 
-    if (!username || !password) {
+    if (!normalizedUsername || !normalizedPassword) {
       setError('Username and password are required.');
       return;
     }
@@ -27,15 +29,15 @@ function Login() {
     try {
       setLoading(true);
       const response = await apiClient.post('/api/auth/login', {
-        username,
-        password
+        username: normalizedUsername,
+        password: normalizedPassword
       });
 
       if (response.status === 200) {
-        const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+        const authHeader = `Basic ${btoa(`${normalizedUsername}:${normalizedPassword}`)}`;
         const role = deriveRole(response.data?.roles || []);
 
-        saveSession({ username, role, authHeader });
+        saveSession({ username: normalizedUsername, role, authHeader });
         navigate(role === 'ADMIN' ? '/admin' : '/user');
       }
     } catch (apiError) {
