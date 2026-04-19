@@ -16,10 +16,10 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const login = async () => {
+  const login = async (forcedCredentials) => {
     setError('');
-    const normalizedUsername = username.trim();
-    const normalizedPassword = password.trim();
+    const normalizedUsername = (forcedCredentials?.username ?? username).trim();
+    const normalizedPassword = (forcedCredentials?.password ?? password).trim();
 
     if (!normalizedUsername || !normalizedPassword) {
       setError('Username and password are required.');
@@ -59,6 +59,25 @@ function Login() {
             Try: student/password (USER) or admin/password (ADMIN)
           </Typography>
 
+          <div className="d-flex flex-wrap gap-2 mb-3">
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => login({ username: 'student', password: 'password' })}
+              disabled={loading}
+            >
+              Login as Student
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => login({ username: 'admin', password: 'password' })}
+              disabled={loading}
+            >
+              Login as Admin
+            </Button>
+          </div>
+
           {error ? <Alert severity="error" className="mb-3">{error}</Alert> : null}
 
           <TextField
@@ -83,7 +102,7 @@ function Login() {
             variant="contained"
             fullWidth
             size="large"
-            onClick={login}
+            onClick={() => login()}
             disabled={loading}
           >
             {loading ? <CircularProgress size={24} color="inherit" /> : 'Login'}
