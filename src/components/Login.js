@@ -4,12 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import apiClient from './api';
 import { saveSession } from './auth';
 
-const deriveRole = (username, apiData) => {
-  if (apiData && typeof apiData.role === 'string') {
-    return apiData.role.toUpperCase();
-  }
-
-  return username.toLowerCase().includes('admin') ? 'ADMIN' : 'USER';
+const deriveRole = (roles = []) => {
+  const normalizedRoles = roles.map((role) => String(role).toUpperCase());
+  return normalizedRoles.includes('ROLE_ADMIN') ? 'ADMIN' : 'USER';
 };
 
 function Login() {
@@ -29,16 +26,14 @@ function Login() {
 
     try {
       setLoading(true);
-      const response = await apiClient.get('/api/user/profile', {
-        auth: {
-          username,
-          password
-        }
+      const response = await apiClient.post('/api/auth/login', {
+        username,
+        password
       });
 
       if (response.status === 200) {
         const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
-        const role = deriveRole(username, response.data);
+        const role = deriveRole(response.data?.roles || []);
 
         saveSession({ username, role, authHeader });
         navigate(role === 'ADMIN' ? '/admin' : '/user');
@@ -57,6 +52,9 @@ function Login() {
           <Typography variant="h4" className="fw-bold mb-1">RBAC Frontend</Typography>
           <Typography variant="body2" color="text.secondary" className="mb-4">
             Login to continue to your role-specific dashboard.
+          </Typography>
+          <Typography variant="caption" color="text.secondary" className="d-block mb-3">
+            Try: student/password (USER) or admin/password (ADMIN)
           </Typography>
 
           {error ? <Alert severity="error" className="mb-3">{error}</Alert> : null}

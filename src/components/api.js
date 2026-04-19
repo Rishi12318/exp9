@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getAuthHeader } from './auth';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8080'
+  baseURL: '/'
 });
 
 apiClient.interceptors.request.use((config) => {
